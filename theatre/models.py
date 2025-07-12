@@ -44,12 +44,12 @@ class Play(models.Model):
     genres = models.ManyToManyField(
         Genre,
         blank=True,
-        related_name="movies",
+        related_name="plays",
     )
     actors = models.ManyToManyField(
         Actor,
         blank=True,
-        related_name="movies",
+        related_name="plays",
     )
 
     class Meta:
