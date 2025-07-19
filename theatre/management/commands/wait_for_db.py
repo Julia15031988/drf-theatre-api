@@ -5,7 +5,7 @@ from django.db import OperationalError, connections
 
 class Command(BaseCommand):
 
-    def handle(self, *args):
+    def handle(self, *args, **options):
         """
         Waits for the database to be available before continuing.
         """
