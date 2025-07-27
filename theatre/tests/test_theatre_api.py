@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
-
+from django.contrib.auth import get_user_model
 from theatre.models import Play, Genre, Actor
 from theatre.serializers import PlayListSerializer, PlayDetailSerializer
 
