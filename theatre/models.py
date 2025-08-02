@@ -62,15 +62,11 @@ class Play(models.Model):
 class Performance(models.Model):
     show_time = models.DateTimeField()
     play = models.ForeignKey(
-        Play,
-        on_delete=models.CASCADE,
-        related_name="performances"
+        Play, on_delete=models.CASCADE, related_name="performances"
     )
 
     theatre_hall = models.ForeignKey(
-        TheatreHall,
-        on_delete=models.CASCADE,
-        related_name="performances"
+        TheatreHall, on_delete=models.CASCADE, related_name="performances"
     )
 
     class Meta:
@@ -79,12 +75,11 @@ class Performance(models.Model):
     def __str__(self):
         return self.play.title + " " + str(self.show_time)
 
+
 class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="orders"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders"
     )
 
     def __str__(self):
@@ -96,14 +91,10 @@ class Reservation(models.Model):
 
 class Ticket(models.Model):
     performance = models.ForeignKey(
-        "Performance",
-        on_delete=models.CASCADE,
-        related_name="tickets"
+        "Performance", on_delete=models.CASCADE, related_name="tickets"
     )
     reservation = models.ForeignKey(
-        "Reservation",
-        on_delete=models.CASCADE,
-        related_name="tickets"
+        "Reservation", on_delete=models.CASCADE, related_name="tickets"
     )
     row = models.PositiveIntegerField()
     seat = models.PositiveIntegerField()
@@ -116,16 +107,15 @@ class Ticket(models.Model):
         ]:
             max_value = getattr(theatre_hall, hall_attr)
             if not (1 <= value <= max_value):
-                raise error_to_raise({
-                    field_name: f"{field_name.capitalize()} must be in range 1 to {max_value}"
-                })
+                raise error_to_raise(
+                    {
+                        field_name: f"{field_name.capitalize()} must be in range 1 to {max_value}"
+                    }
+                )
 
     def clean(self):
         self.validate_ticket(
-            self.row,
-            self.seat,
-            self.performance.theatre_hall,
-            ValidationError
+            self.row, self.seat, self.performance.theatre_hall, ValidationError
         )
 
     def save(self, *args, **kwargs):

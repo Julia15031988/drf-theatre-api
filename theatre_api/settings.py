@@ -2,13 +2,14 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
 from decouple import config
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = True
 

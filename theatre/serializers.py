@@ -12,6 +12,7 @@ from theatre.models import (
     Reservation,
 )
 
+
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
@@ -37,9 +38,7 @@ class PlaySerializer(serializers.ModelSerializer):
 
 
 class PlayListSerializer(PlaySerializer):
-    genres = serializers.SlugRelatedField(
-        many=True, read_only=True, slug_field="name"
-    )
+    genres = serializers.SlugRelatedField(many=True, read_only=True, slug_field="name")
     actors = serializers.SlugRelatedField(
         many=True, read_only=True, slug_field="full_name"
     )
@@ -58,8 +57,12 @@ class PerformanceSerializer(serializers.ModelSerializer):
 
 class PerformanceListSerializer(PerformanceSerializer):
     play_title = serializers.CharField(source="play.title", read_only=True)
-    theatre_hall_name = serializers.CharField(source="theatre_hall.name", read_only=True)
-    theatre_hall_capacity = serializers.IntegerField(source="theatre_hall.capacity", read_only=True)
+    theatre_hall_name = serializers.CharField(
+        source="theatre_hall.name", read_only=True
+    )
+    theatre_hall_capacity = serializers.IntegerField(
+        source="theatre_hall.capacity", read_only=True
+    )
     tickets_available = serializers.IntegerField(read_only=True)
 
     class Meta:
@@ -81,7 +84,7 @@ class TicketSerializer(serializers.ModelSerializer):
             attrs["row"],
             attrs["seat"],
             attrs["performance"].theatre_hall,
-            ValidationError
+            ValidationError,
         )
         return data
 

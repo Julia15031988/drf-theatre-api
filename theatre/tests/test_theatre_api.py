@@ -7,14 +7,16 @@ from theatre.models import Play, Genre, Actor
 from theatre.serializers import PlayListSerializer, PlayDetailSerializer
 
 PLAY_URL = reverse("theatre:play-list")  # name з urls.py
+
+
 def detail_url(play_id):
     return reverse("theatre:play-detail", args=[play_id])
+
 
 def sample_play(**params):
     defaults = {
         "title": "Sample Play",
         "description": "A touching drama",
-        "duration": 120,
     }
     defaults.update(params)
     return Play.objects.create(**defaults)
@@ -32,9 +34,7 @@ class PublicPlayTests(TestCase):
 class PrivatePlayTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = get_user_model().objects.create_user(
-            "user@test.com", "testpass"
-        )
+        self.user = get_user_model().objects.create_user("user@test.com", "testpass")
         self.client.force_authenticate(self.user)
 
     def test_list_plays(self):
